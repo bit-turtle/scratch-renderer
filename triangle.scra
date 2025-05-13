@@ -1,0 +1,18 @@
+(declare
+	(name "Triangle Renderer")
+)
+
+(# Test if a point is inside of a triangle)
+(define (variable inTriangle) )
+(function inTriangle (Test if point (number x) (number y) is inside of a triangle made of the points (number ax) (number ay) , (number bx) (number by) , and (number cx) (number cy) )
+	(set inTriangle (- 
+		(*
+			(- (argument bx) (argument ax) )
+			(- (argument cy) (argument ay) )
+		)
+		(*
+			(- (argument by) (argument ay) )
+			(- (argument cx) (argument ax) )
+		)
+	) )
+)
