@@ -1,3 +1,121 @@
+(declare
+	(name "Triangle Renderer")
+)
+
+(# RGB Encoder)
+(define (variable colorRGB) ) (# Return Value)
+(function colorRGB (Encode RGB color (number r) (number g) (number b) )
+  (set colorRGB (+ (+ (* (round (argument r) ) 65536) (* (round (argument g) ) 256) ) (round (argument b) ) ) )
+)
+
+(# Fragment Shader)
+(define
+	(# Triangle Point Colors (Encoded in RGB) )
+	(variable RcolorA 255)
+	(variable GcolorA)
+	(variable BcolorA)
+	(variable RcolorB)
+	(variable GcolorC 255)
+	(variable BcolorC)
+	(variable RcolorC)
+	(variable GcolorB)
+	(variable BcolorB 255)
+	(# Temporary Variables)
+  (variable weightA)
+  (variable weightB)
+  (variable weightC)
+)
+(function fragmentShader (Fragment Shader computing the color of the point (number px) (number py) in the triangle made by the points (number ax) (number ay) , (number bx) (number by) , and (number cx) (number cy) )
+	(# Calculate Weights)
+  (set weightA (/
+    (+
+      (*
+        (- (argument by) (argument cy) )
+        (- (argument px) (argument cx) ) )
+      (*
+        (- (argument cx) (argument bx) )
+        (- (argument py) (argument cy) )
+      )
+    )
+    (+
+      (*
+        (- (argument by) (argument cy) )
+        (- (argument ax) (argument cx) )
+      )
+      (*
+        (- (argument cx) (argument bx) )
+        (- (argument ay) (argument cy) )
+      )
+    )
+  ) )
+  (set weightB (/
+    (+
+      (*
+        (- (argument cy) (argument ay) )
+        (- (argument px) (argument cx) ) )
+      (*
+        (- (argument ax) (argument cx) )
+        (- (argument py) (argument cy) )
+      )
+    )
+    (+
+      (*
+        (- (argument by) (argument cy) )
+        (- (argument ax) (argument cx) )
+      )
+      (*
+        (- (argument cx) (argument bx) )
+        (- (argument ay) (argument cy) )
+      )
+    )
+  ) )
+  (set weightC (- 1 (+ (variable weightA) (variable weightB) ) ) )
+  (# Set Pen Color Value)
+  (call colorRGB
+    (+
+      (* (variable RcolorA) (variable weightA) )
+      (+
+        (* (variable RcolorB) (variable weightB) )
+        (* (variable RcolorC) (variable weightC) )
+      )
+    )
+    (+
+      (* (variable GcolorA) (variable weightA) )
+      (+
+        (* (variable GcolorB) (variable weightB) )
+        (* (variable GcolorC) (variable weightC) )
+      )
+    )
+    (+
+      (* (variable BcolorA) (variable weightA) )
+      (+
+        (* (variable BcolorB) (variable weightB) )
+        (* (variable BcolorC) (variable weightC) )
+      )
+    )
+  )
+  (pen_color (variable colorRGB) )
+)
+
+(# Draw Triangle)
+(define
+	(# Rasterizer Settings)
+	(variable resolution 4)
+	(variable edgeculling 0) (# 0: false, 1: true)
+	(# Temporary Variables)
+	(variable topX)
+	(variable topY)
+	(variable botX)
+	(variable botY)
+	(variable startX)
+	(variable startY)
+	(variable endX)
+	(variable endY)
+	(variable midState 0) (# 0: undefined, 1: left, 2: right)
+	(variable midX)
+	(variable midY)
+	(variable offset) (# Offset of end of row)
+)
 (function drawTriangle (Draw triangle made of the points (number ax) (number ay) , (number bx) (number by) , and (number cx) (number cy) )
 	(# Edge Culling)
 	(if
@@ -122,4 +240,12 @@
 			(change_y (variable resolution) )
 		)
 	)
+)
+
+(# Example Use)
+(when flag
+  (forever
+    (pen_clear)
+    (call drawTriangle 100 100 -200 -100 (value mouse_x) (value mouse_y) )
+  )
 )

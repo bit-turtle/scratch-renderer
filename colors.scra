@@ -1,0 +1,72 @@
+(# Color Interpolation Fragment Shader)
+(function fragmentShader (Fragment Shader computing the color of the point (number px) (number py) in the triangle made by the points (number ax) (number ay) , (number bx) (number by) , and (number cx) (number cy) )
+	(# Calculate Weights)
+  (set weightA (/
+    (+
+      (*
+        (- (argument by) (argument cy) )
+        (- (argument px) (argument cx) ) )
+      (*
+        (- (argument cx) (argument bx) )
+        (- (argument py) (argument cy) )
+      )
+    )
+    (+
+      (*
+        (- (argument by) (argument cy) )
+        (- (argument ax) (argument cx) )
+      )
+      (*
+        (- (argument cx) (argument bx) )
+        (- (argument ay) (argument cy) )
+      )
+    )
+  ) )
+  (set weightB (/
+    (+
+      (*
+        (- (argument cy) (argument ay) )
+        (- (argument px) (argument cx) ) )
+      (*
+        (- (argument ax) (argument cx) )
+        (- (argument py) (argument cy) )
+      )
+    )
+    (+
+      (*
+        (- (argument by) (argument cy) )
+        (- (argument ax) (argument cx) )
+      )
+      (*
+        (- (argument cx) (argument bx) )
+        (- (argument ay) (argument cy) )
+      )
+    )
+  ) )
+  (set weightC (- 1 (+ (variable weightA) (variable weightB) ) ) )
+  (# Set Pen Color Value)
+  (call colorRGB
+    (+
+      (* (variable RcolorA) (variable weightA) )
+      (+
+        (* (variable RcolorB) (variable weightB) )
+        (* (variable RcolorC) (variable weightC) )
+      )
+    )
+    (+
+      (* (variable GcolorA) (variable weightA) )
+      (+
+        (* (variable GcolorB) (variable weightB) )
+        (* (variable GcolorC) (variable weightC) )
+      )
+    )
+    (+
+      (* (variable BcolorA) (variable weightA) )
+      (+
+        (* (variable BcolorB) (variable weightB) )
+        (* (variable BcolorC) (variable weightC) )
+      )
+    )
+  )
+  (pen_color (variable colorRGB) )
+)
