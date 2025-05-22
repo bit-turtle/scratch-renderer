@@ -4,9 +4,9 @@
     (pen_clear)
     (call drawTriangle3D
       0 -100 1
-      (* (math sin (value timer) ) 200)
+      (* (math sin (* (value timer) 20) ) 200)
       0
-      (+ (math cos (value timer) ) 2)
+      (+ (math cos (* (value timer) 20) ) 2)
       0 100 1
     )
   )
