@@ -1,7 +1,26 @@
 (# Image List)
 (define
   (variable pixelColor)
-  (list imageList)
+  (list imageList
+    4
+    4
+    16660000
+    14531612
+    3393060
+    1982175
+    16173019
+    11482799
+    4733008
+    13093091
+    13289419
+    6174824
+    11417803
+    14338015
+    3684408
+    13289419
+    14338015
+    3881020
+  )
 )
 (# Image Coordinates go from 0 to 1 in both dimensions)
 (function getPixel (Get pixel color of image at (number u) , (number v) )
@@ -9,19 +28,19 @@
     (item
       (+
         (+
-          (*
+          (math floor (*
             (argument u)
-            (item 0 imageList)
-          )
+            (item 1 imageList)
+          ) )
           (*
-            (*
+            (math floor (*
               (argument v)
-              (item 1 imageList)
-            )
-            (item 0 imageList)
+              (item 2 imageList)
+            ) )
+            (item 1 imageList)
           )
         )
-        2
+        3
       )
     imageList)
   )

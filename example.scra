@@ -1,0 +1,7 @@
+(# Example Use)
+(when flag
+  (forever
+    (pen_clear)
+    (call drawTriangle 100 100 -200 -100 (value mouse_x) (value mouse_y) )
+  )
+)

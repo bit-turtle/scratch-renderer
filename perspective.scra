@@ -1,0 +1,8 @@
+(# Perspective Vertex Shader 3D triangle)
+(function drawTriangle3D (Vertex Shader computing the locations of the points in the 3D triangle formed by the points (number ax) (number ay) (number az) , (number bx) (number by) (number bz) , and (number cx) (number cy) (number cz) and then drawing the triangle )
+  (call drawTriangle
+    (/ (argument ax) (argument az) ) (/ (argument ay) (argument az) )
+    (/ (argument bx) (argument bz) ) (/ (argument by) (argument bz) )
+    (/ (argument cx) (argument cz) ) (/ (argument cy) (argument cz) )
+  )
+)

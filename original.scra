@@ -1,3 +1,5 @@
+(# The original triangle renderer source code)
+
 (declare
 	(name "Triangle Renderer")
 )
