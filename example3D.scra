@@ -3,15 +3,11 @@
   (forever
     (pen_clear)
     (call drawTriangle3D
-      (* (math sin (value timer) ) 100)
-      -100
-      (* (math cos (value timer) ) 100)
-      (* (math sin (+ (value timer) 0.25) ) 100)
-      -100
-      (* (math cos (+ (value timer) 0.25) ) 100)
+      0 -100 1
+      (* (math sin (value timer) ) 200)
       0
-      100
-      1
+      (+ (math cos (value timer) ) 2)
+      0 100 1
     )
   )
 )
