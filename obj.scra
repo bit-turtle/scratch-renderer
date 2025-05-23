@@ -1,0 +1,232 @@
+(define
+	(list objFile)
+	(list objVertex)
+	(list objFaces)
+	(# Temporary Variables)
+	(variable objLine)
+    (list objSequence)
+    (variable objBuffer)
+    (variable objIndex)
+)
+(function objParse (Parse OBJ file contained in the objFile list into the objVertex and the objFaces lists)
+	(delete_all objVertex)
+    (delete_all objFaces)
+    (set objLine 0)
+	(repeat_until (= (variable objLine) (size objFile) )
+		(change objLine 1)
+
+        (# Parse line into Sequence)
+        (delete_all objSequence)
+        (set objIndex 0)
+        (set objBuffer (letter 0 "obj") )
+        (repeat_until (= (variable objIndex) (length (item (variable objLine) objFile) ) )
+            (change objIndex 1)
+
+            (# Split on spaces)
+            (if (= (letter (variable objIndex) (item (variable objLine) objFile) ) " ")
+                (add (variable objBuffer) objSequence)
+                (set objBuffer (letter 0 "obj") )
+            )
+            (else
+                (set objBuffer (join
+                    (variable objBuffer)
+                    (letter (variable objIndex) (item (variable objLine) objFile) )
+                ) )
+            )
+        )
+
+        (# Add Sequence to Lists)
+		(if (= (item 1 objSequence) "v")
+            (add (item 2 objSequence) objVertex)
+            (add (item 3 objSequence) objVertex)
+            (add (item 4 objSequence) objVertex)
+        )
+        (elif (= (item 1 objSequence) "f")
+            (add (item 2 objSequence) objFaces)
+            (add (item 3 objSequence) objFaces)
+            (add (item 4 objSequence) objFaces)
+        )
+	)
+)
+
+(define
+    (variable objTri)
+)
+(function objRender (Render OBJ Model)
+    (set objTri 0)
+    (repeat_until (= (variable objTri) (/ (size objFaces) 3) )
+        (call drawTriangle3D
+            (item
+                (+
+                    (*
+                        (item
+                            (+
+                                (*
+                                    (variable objTri)
+                                    3
+                                )
+                                0
+                            )
+                            objFaces
+                            )
+                        3
+                    )
+                    0
+                )
+                objVertex
+            )
+            (item
+                (+
+                    (*
+                        (item
+                            (+
+                                (*
+                                    (variable objTri)
+                                    3
+                                )
+                                0
+                            )
+                            objFaces
+                            )
+                        3
+                    )
+                    1
+                )
+                objVertex
+            )
+            (item
+                (+
+                    (*
+                        (item
+                            (+
+                                (*
+                                    (variable objTri)
+                                    3
+                                )
+                                0
+                            )
+                            objFaces
+                            )
+                        3
+                    )
+                    2
+                )
+                objVertex
+            )
+            (item
+                (+
+                    (*
+                        (item
+                            (+
+                                (*
+                                    (variable objTri)
+                                    3
+                                )
+                                1
+                            )
+                            objFaces
+                            )
+                        3
+                    )
+                    0
+                )
+                objVertex
+            )
+            (item
+                (+
+                    (*
+                        (item
+                            (+
+                                (*
+                                    (variable objTri)
+                                    3
+                                )
+                                1
+                            )
+                            objFaces
+                            )
+                        3
+                    )
+                    1
+                )
+                objVertex
+            )
+            (item
+                (+
+                    (*
+                        (item
+                            (+
+                                (*
+                                    (variable objTri)
+                                    3
+                                )
+                                1
+                            )
+                            objFaces
+                            )
+                        3
+                    )
+                    2
+                )
+                objVertex
+            )
+            (item
+                (+
+                    (*
+                        (item
+                            (+
+                                (*
+                                    (variable objTri)
+                                    3
+                                )
+                                2
+                            )
+                            objFaces
+                            )
+                        3
+                    )
+                    0
+                )
+                objVertex
+            )
+            (item
+                (+
+                    (*
+                        (item
+                            (+
+                                (*
+                                    (variable objTri)
+                                    3
+                                )
+                                2
+                            )
+                            objFaces
+                            )
+                        3
+                    )
+                    1
+                )
+                objVertex
+            )
+            (item
+                (+
+                    (*
+                        (item
+                            (+
+                                (*
+                                    (variable objTri)
+                                    3
+                                )
+                                2
+                            )
+                            objFaces
+                            )
+                        3
+                    )
+                    2
+                )
+                objVertex
+            )
+        )
+    )
+)
